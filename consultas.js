@@ -1,10 +1,18 @@
 const { Pool } = require('pg')
 
+const host = process.env.PGHOST || 'localhost';
+const user = process.env.PGUSER || 'postgres';
+const password = process.env.PGPASSWORD || 'admin';
+const database = process.env.PGDATABASE || 'optimumweb';
+const port = process.env.PGPORT || 5432;
+
+
 const pool = new Pool({
-    host: 'localhost',
-    user: 'postgres',
-    password: 'admin',
-    database: 'optimumweb',
+    host: host,
+    user: user,
+    password: password,
+    database: database,
+    port: port,
     allowExitOnIdle: true
 })
 
