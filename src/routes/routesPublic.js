@@ -12,7 +12,7 @@ router.get('/login', async (req, res) => {
             const user = { name: req.body.username }
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
             res.setHeader('Authorization', `Bearer ${accessToken}`);
-            res.json({accesToken:accessToken})
+            res.json({accessToken:accessToken})
         } else {
             res.status(result.status).json({ message: result.message })
         }
@@ -32,16 +32,6 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.get('/profileUser/:id_user/course/:id_course', async (req, res) => {
-  try {
-    const id_user = req.params.id_user;
-    const id_course = req.params.id_course;
-    const userProfileAndCourse = await getUserProfileAndCourse(id_user, id_course);
-    res.status(200).json(userProfileAndCourse);
-  } catch (e) {
-    console.log(e);
-    res.status(500).json({ message: 'Error en el servidor' });
-  }
-});
+
 
 module.exports = router;
