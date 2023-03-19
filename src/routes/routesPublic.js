@@ -6,27 +6,23 @@ const router = express.Router();
 require('dotenv').config()
 
 router.post('/login', async (req, res) => {
-    try {
+  try {
       const result = await postLogin(req, res);
-      if (res.statusCode === 200) {
-        const user = { name: req.body.username };
-        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-        console.log (accessToken)
-        //res.setHeader('Authorization', `Bearer ${accessToken}`);
-        res.setHeader('Content-Type', 'application/json')
-        res.send(accessToken, `Bearer ${accessToken}`);
-        //res.writeHead(200, {'content-type': 'text/html'})
-        //res.write(accessToken)
-        //res.end()
-        //res.json({ accessToken: accessToken});
+      console.log(result);
+      if (result) {
+          const { username, password } = req.body;
+          const token = jwt.sign({ username, password }, 'mySecretKey');
+          console.log(token);
+          res.setHeader('Authorization', `Bearer ${token}`);
+          res.status(200).json({ id_user: result.id_user });
       } else {
-        res.status(result.status).json({ message: result.message });
+          res.status(400).json({ message: 'Usuario o contraseña incorrectos' });
       }
-    } catch (e) {
+  } catch (e) {
       console.log(e);
       res.status(500).json({ message: 'Error en el servidor' });
-    }
-  });
+  }
+});
 
 
 router.post('/register', async (req, res) => {

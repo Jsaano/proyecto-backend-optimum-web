@@ -34,21 +34,25 @@ const postRegister = async (req, res) => {
 const postLogin = async (req, res) => {
     try {
         const { username, password } = req.body;
+        console.log(username, password);
         const response = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
         if (response.rowCount === 0) {
             res.status(400).json({ message: 'Usuario o contraseña incorrectos' });
+            return false;
         } else {
             if (password === response.rows[0].password) {
-                res.status(200).json({id_user: response.rows[0].id_user})
+                return { id_user: response.rows[0].id_user };
             } else {
-                res.status(400).json({ message: 'Usuario o contraseña incorrectos' })
-            }
+                res.status(400).json({ message: 'Usuario o contraseña incorrectos' });
+                return false;
+            }            
         }
     } catch (e) {
-        console.log(e)
-        res.status(500).json({ message: 'Error en el servidor' })
+        console.log(e);
+        res.status(500).json({ message: 'Error en el servidor' });
+        return false;
     }
-}
+};
 
 const getUserCourseProfile = async (id_user, res) => {
     try {
