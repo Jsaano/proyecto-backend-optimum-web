@@ -1,13 +1,13 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 
-const { postRegister, getLogin } = require('../../consultas');
+const { postRegister, postLogin } = require('../../consultas');
 const router = express.Router();
 require('dotenv').config()
 
 router.post('/login', async (req, res) => {
     try {
-        const result = await getLogin(req, res);
+        const result = await postLogin(req, res);
         if (res.statusCode === 200) {
             const user = { name: req.body.username }
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
