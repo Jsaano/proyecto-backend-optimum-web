@@ -13,7 +13,8 @@ router.post('/login', async (req, res) => {
         const id_user = result.id_user; // supongamos que esto es el id_user obtenido desde la base de datos
         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
         res.setHeader('Authorization', `Bearer ${accessToken}`);
-        res.json({ accessToken: accessToken, id_user: id_user }); // agregamos el id_user a la respuesta
+        res.json({ accessToken: accessToken, id_user: id_user });
+        console.log (id_user)
       } else {
         res.status(result.status).json({ message: result.message });
       }
