@@ -1,11 +1,10 @@
 const { Pool } = require('pg')
 
-const host = process.env.PGHOST || 'localhost';
+const host = process.env.PGHOST || 'containers-us-west-92.railway.app';
 const user = process.env.PGUSER || 'postgres';
-const password = process.env.PGPASSWORD || 'admin';
-const database = process.env.PGDATABASE || 'optimumweb';
-const port = process.env.PGPORT || 5432;
-
+const password = process.env.PGPASSWORD || '5jknywkmEIeiiIQAOeCr';
+const database = process.env.PGDATABASE || 'railway';
+const port = process.env.PGPORT || 6646;
 
 const pool = new Pool({
     host: host,
@@ -18,10 +17,10 @@ const pool = new Pool({
 
 const postRegister = async (req, res) => {
     try {
-        const { username, password, email, name_user } = req.body;
-        const response = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+        const { nameUser, name, email, password } = req.body;
+        const response = await pool.query('SELECT * FROM users WHERE username = $1', [nameUser]);
         if (response.rowCount === 0) {
-            const response = await pool.query('INSERT INTO users (username, password, email, name_user) VALUES ($1, $2, $3, $4)', [username, password, email, name_user]);
+            const result = await pool.query('INSERT INTO users (username, password, email, name_user) VALUES ($1, $2, $3, $4)', [nameUser, password, email, name]);
             res.status(201).json({ message: 'Usuario creado' });
         } else {
             res.status(400).json({ message: 'El usuario ya existe' });
@@ -40,7 +39,7 @@ const postLogin = async (req, res) => {
             res.status(400).json({ message: 'Usuario o contraseña incorrectos' });
         } else {
             if (password === response.rows[0].password) {
-                res.status(200)
+                res.status(200).json({id_user: response.rows[0].id_user})
             } else {
                 res.status(400).json({ message: 'Usuario o contraseña incorrectos' })
             }

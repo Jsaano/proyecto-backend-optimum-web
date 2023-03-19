@@ -11,8 +11,14 @@ router.post('/login', async (req, res) => {
       if (res.statusCode === 200) {
         const user = { name: req.body.username };
         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-        res.setHeader('Authorization', `Bearer ${accessToken}`);
-        res.json({ accessToken: accessToken});
+        console.log (accessToken)
+        //res.setHeader('Authorization', `Bearer ${accessToken}`);
+        res.setHeader('Content-Type', 'application/json')
+        res.send(accessToken, `Bearer ${accessToken}`);
+        //res.writeHead(200, {'content-type': 'text/html'})
+        //res.write(accessToken)
+        //res.end()
+        //res.json({ accessToken: accessToken});
       } else {
         res.status(result.status).json({ message: result.message });
       }
