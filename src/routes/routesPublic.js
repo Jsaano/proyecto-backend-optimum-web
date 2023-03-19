@@ -5,7 +5,7 @@ const { postRegister, getLogin } = require('../../consultas');
 const router = express.Router();
 require('dotenv').config()
 
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
         const result = await getLogin(req, res);
         if (res.statusCode === 200) {

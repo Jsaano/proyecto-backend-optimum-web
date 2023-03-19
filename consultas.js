@@ -32,7 +32,7 @@ const postRegister = async (req, res) => {
     }
 }
 
-const getLogin = async (req, res) => {
+const postLogin = async (req, res) => {
     try {
         const { username, password } = req.body;
         const response = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
@@ -92,7 +92,7 @@ const getUserProfileAndCourse = async (id_user, id_course) => {
   
 module.exports = {
     postRegister,
-    getLogin,
+    postLogin,
     getUserCourseProfile,
     postAdmin,
     getUserProfileAndCourse
