@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const cors = require('cors');
 
 const authenticateToken = (req, res, next) => {
   try {
@@ -13,11 +12,5 @@ const authenticateToken = (req, res, next) => {
   }
 }
 
-const corsOptions = {
-  origin: 'https://optimum-web.vercel.app',
-  optionsSuccessStatus: 200
-}
-
-app.use(cors(corsOptions));
 
 module.exports = authenticateToken;
