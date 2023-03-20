@@ -11,7 +11,7 @@ router.post('/login', async (req, res) => {
       console.log(result);
       if (result) {
           const { username, password } = req.body;
-          const token = jwt.sign({ username, password }, 'mySecretKey');
+          const token = jwt.sign({ username, password }, process.env.ACCESS_TOKEN_SECRET);
           console.log(token);
           res.setHeader('Authorization', `Bearer ${token}`);
           res.status(200).json({ id_user: result.id_user });
