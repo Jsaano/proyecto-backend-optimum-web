@@ -7,7 +7,9 @@ const { getUserCourseProfile, postAdmin, getUserProfileAndCourse } = require('..
 
 router.get('/profileUser/:id_user', async (req, res) => {
     try {
+        console.log("aqui")
         const id_user = req.params.id_user;
+        console.log (req.params)
         getUserCourseProfile(id_user, res);
     } catch (e) {
         console.log(e)
